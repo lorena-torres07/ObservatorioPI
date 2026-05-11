@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 12%;
+    --primary: 213 85% 38%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 213 30% 93%;
+    --secondary-foreground: 213 60% 28%;
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 10% 50%;
+    --accent: 199 80% 40%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 213 85% 38%;
+    --radius: 0.625rem;
+    --chart-1: 213 85% 38%;
+    --chart-2: 199 80% 40%;
+    --chart-3: 142 71% 35%;
+    --chart-4: 38 92% 48%;
+    --chart-5: 0 84% 55%;
+  }
+
+  .dark {
+    --background: 220 20% 8%;
+    --foreground: 210 20% 95%;
+    --card: 220 20% 11%;
+    --card-foreground: 210 20% 95%;
+    --popover: 220 20% 11%;
+    --popover-foreground: 210 20% 95%;
+    --primary: 213 80% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 213 50% 80%;
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 199 80% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 213 80% 55%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground antialiased; }
+}
+
+@layer utilities {
+  .gradient-hero {
+    background: linear-gradient(
+      135deg,
+      hsl(213, 85%, 14%) 0%,
+      hsl(213, 70%, 20%) 50%,
+      hsl(199, 80%, 22%) 100%
+    );
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .text-balance { text-wrap: balance; }
+}
