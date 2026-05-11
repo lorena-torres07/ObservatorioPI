@@ -1,0 +1,35 @@
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { NextResponse, type NextRequest } from 'next/server';
+
+export async function POST(request: NextRequest) {
+  const cookieStore = cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() { return cookieStore.getAll(); },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+          } catch {}
+        },
+      },
+    }
+  );
+
+  await supabase.auth.signOut();
+
+  const response = NextResponse.redirect(new URL('/login', request.url));
+
+  // Clear all Supabase auth cookies
+  const allCookies = cookieStore.getAll();
+  allCookies.forEach(cookie => {
+    if (cookie.name.startsWith('sb-') || cookie.name.includes('supabase')) {
+      response.cookies.set(cookie.name, '', { maxAge: 0, path: '/' });
+    }
+  });
+
+  return response;
+}
