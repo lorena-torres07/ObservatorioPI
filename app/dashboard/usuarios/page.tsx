@@ -1,17 +1,18 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Users, Plus, Search, Loader as Loader2, CircleAlert as AlertCircle, Trash2, Shield, BookOpen, GraduationCap, CircleCheck as CheckCircle, X, UserPlus, Circle as XCircle } from 'lucide-react';
+import { Users, Plus, Search, Loader as Loader2, CircleAlert as AlertCircle, Trash2, Shield, BookOpen, GraduationCap, CircleCheck as CheckCircle, X, UserPlus, Circle as XCircle, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { createClient } from '@/lib/supabase/client';
 import type { Profile, Class } from '@/lib/supabase/types';
 
-const roleConfig: Record<string, { label: string; icon: React.ElementType; color: string; bg: string }> = {
+const roleConfig = {
   admin: { label: 'Admin', icon: Shield, color: 'text-amber-600', bg: 'bg-amber-50' },
   student: { label: 'Aluno', icon: BookOpen, color: 'text-blue-600', bg: 'bg-blue-50' },
   professor: { label: 'Professor', icon: GraduationCap, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  partner: { label: 'Empresa', icon: Building2, color: 'text-cyan-600', bg: 'bg-cyan-50' }, 
 };
 
 interface UserWithClasses extends Profile {
@@ -475,6 +476,7 @@ export default function UsersManagementPage() {
                   <option value="student">Aluno</option>
                   <option value="professor">Professor</option>
                   <option value="admin">Administrador</option>
+                  <option value="partner">Empresa Parceira</option>
                 </select>
               </div>
 
