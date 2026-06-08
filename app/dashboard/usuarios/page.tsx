@@ -194,9 +194,9 @@ export default function UsersManagementPage() {
   };
 
   const filtered = users.filter(u =>
-    u.full_name.toLowerCase().includes(search.toLowerCase()) ||
-    u.email.toLowerCase().includes(search.toLowerCase()) ||
-    u.role.toLowerCase().includes(search.toLowerCase())
+    u.full_name?.toLowerCase().includes(search.toLowerCase()) ||
+    u.email?.toLowerCase().includes(search.toLowerCase()) ||
+    u.role?.toLowerCase().includes(search.toLowerCase())
   );
 
   const stats = {
@@ -218,12 +218,14 @@ export default function UsersManagementPage() {
         </Button>
       </div>
 
-      {error && (
+      {/* ERRO NA PÁGINA PRINCIPAL (Só aparece se o Modal estiver fechado) */}
+      {error && !showCreateModal && (
         <div className="flex items-center gap-3 bg-destructive/10 border border-destructive/20 rounded-xl p-4">
           <AlertCircle className="w-4 h-4 text-destructive shrink-0" />
           <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
+      
       {success && (
         <div className="flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl p-4">
           <CheckCircle className="w-4 h-4 text-green-600 shrink-0" />
@@ -386,7 +388,7 @@ export default function UsersManagementPage() {
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => { setAssigningUser(null); setSelectedClass(''); }}
+                            onClick={() => { setAssigningUser(null); setSelectedClass(''); setError(''); }}
                             className="flex-1 h-8 text-xs"
                           >
                             Cancelar
@@ -404,14 +406,22 @@ export default function UsersManagementPage() {
 
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setShowCreateModal(false)} />
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={() => { setShowCreateModal(false); setError(''); }} />
           <div className="relative bg-card border border-border rounded-2xl p-6 w-full max-w-md shadow-xl">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-bold text-foreground">Criar Novo Usuario</h2>
-              <button onClick={() => setShowCreateModal(false)} className="p-1 rounded-lg hover:bg-muted transition-colors">
+              <button onClick={() => { setShowCreateModal(false); setError(''); }} className="p-1 rounded-lg hover:bg-muted transition-colors">
                 <X className="w-5 h-5 text-muted-foreground" />
               </button>
             </div>
+
+            {/* ERRO DENTRO DO MODAL */}
+            {error && (
+              <div className="mb-4 flex items-center gap-3 bg-destructive/10 border border-destructive/20 rounded-xl p-4">
+                <AlertCircle className="w-4 h-4 text-destructive shrink-0" />
+                <p className="text-sm text-destructive">{error}</p>
+              </div>
+            )}
 
             <form onSubmit={handleCreate} className="space-y-4">
               <div className="space-y-1.5">
@@ -478,7 +488,7 @@ export default function UsersManagementPage() {
               </div>
 
               <div className="flex gap-3 pt-2">
-                <Button type="button" variant="outline" onClick={() => setShowCreateModal(false)} className="flex-1">
+                <Button type="button" variant="outline" onClick={() => { setShowCreateModal(false); setError(''); }} className="flex-1">
                   Cancelar
                 </Button>
                 <Button type="submit" disabled={creating} className="flex-1 gap-2">
