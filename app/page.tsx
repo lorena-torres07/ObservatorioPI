@@ -89,7 +89,7 @@ export default function LandingPage() {
                 color: 'text-emerald-600',
                 bg: 'bg-emerald-50',
                 desc: 'Filtre turmas, avalie projetos com rubrica detalhada e registre autorias.',
-                features: ['Rubrica de avaliacao', 'Gestao de turmas', 'Relatorios'],
+                features: ['Rubrica de avaliação', 'Gestão de turmas', 'Relatorios'],
               },
               {
                 icon: Shield,
@@ -97,7 +97,7 @@ export default function LandingPage() {
                 color: 'text-amber-600',
                 bg: 'bg-amber-50',
                 desc: 'Gerencie usuarios, projetos, turmas e gere relatorios completos.',
-                features: ['Gestao de usuarios', 'Atribuicao de turmas', 'Dashboard analitico'],
+                features: ['Gestão de usuários', 'Atribuição de turmas', 'Dashboard analitico'],
               },
             ].map(({ icon: Icon, role, color, bg, desc, features }) => (
               <div key={role} className="bg-card rounded-2xl border border-border p-6 card-hover">

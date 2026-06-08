@@ -15,7 +15,7 @@ import type { Project } from '@/lib/supabase/types';
 const statusConfig: Record<string, { label: string; classes: string; icon: React.ElementType }> = {
   draft: { label: 'Rascunho', classes: 'bg-gray-100 text-gray-700 border-gray-200', icon: Clock },
   submitted: { label: 'Submetido', classes: 'bg-blue-100 text-blue-700 border-blue-200', icon: Send },
-  under_review: { label: 'Em Revisao', classes: 'bg-amber-100 text-amber-700 border-amber-200', icon: Clock },
+  under_review: { label: 'Em Revisão', classes: 'bg-amber-100 text-amber-700 border-amber-200', icon: Clock },
   approved: { label: 'Aprovado', classes: 'bg-green-100 text-green-700 border-green-200', icon: CheckCircle },
   featured: { label: 'Destaque', classes: 'bg-cyan-100 text-cyan-700 border-cyan-200', icon: CheckCircle },
   rejected: { label: 'Devolvido', classes: 'bg-red-100 text-red-700 border-red-200', icon: AlertCircle },
@@ -157,7 +157,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
 
           {project.description && (
             <div className="bg-card rounded-2xl border border-border p-6">
-              <h2 className="font-semibold text-foreground mb-3">Descricao Completa</h2>
+              <h2 className="font-semibold text-foreground mb-3"> Descrição Completa</h2>
               <div className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-sm">
                 {project.description}
               </div>
@@ -262,7 +262,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
               {project.status === 'draft' && (
                 <Button onClick={handleSubmit} disabled={submitting} className="w-full gap-2 justify-start h-10">
                   {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  Submeter para Avaliacao
+                  Submeter para Avaliação
                 </Button>
               )}
               {project.status === 'draft' && !showDeleteConfirm && (
@@ -276,7 +276,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
               )}
               {showDeleteConfirm && (
                 <div className="space-y-2 bg-destructive/5 border border-destructive/20 rounded-xl p-3">
-                  <p className="text-xs text-destructive font-medium">Confirmar exclusao? Esta acao nao pode ser desfeita.</p>
+                  <p className="text-xs text-destructive font-medium">Confirmar exclusão? Esta ação não pode ser desfeita.</p>
                   <div className="flex gap-2">
                     <Button size="sm" variant="destructive" onClick={handleDelete} disabled={deleting} className="flex-1 gap-1.5">
                       {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
@@ -294,13 +294,13 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
             <div className="bg-card rounded-2xl border border-border p-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Shield className="w-4 h-4 text-amber-600" />
-                <h3 className="font-semibold text-foreground text-sm">Acoes do Admin</h3>
+                <h3 className="font-semibold text-foreground text-sm">Ações do Admin</h3>
               </div>
 
               <div className="space-y-2">
                 <p className="text-xs text-muted-foreground font-medium">Alterar Status:</p>
                 {[
-                  { status: 'under_review', label: 'Em Revisao', color: 'bg-amber-500 hover:bg-amber-600' },
+                  { status: 'under_review', label: 'Em Reviso', color: 'bg-amber-500 hover:bg-amber-600' },
                   { status: 'approved', label: 'Aprovar', color: 'bg-green-500 hover:bg-green-600' },
                   { status: 'featured', label: 'Destacar', color: 'bg-cyan-500 hover:bg-cyan-600' },
                   { status: 'rejected', label: 'Devolver', color: 'bg-red-500 hover:bg-red-600' },
@@ -346,7 +346,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
               {project.repository_url && (
                 <a href={project.repository_url} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="w-full gap-2 justify-start h-9 text-sm">
-                    <Github className="w-4 h-4" /> Repositorio
+                    <Github className="w-4 h-4" /> Repositório
                   </Button>
                 </a>
               )}
@@ -360,7 +360,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
               {project.video_url && (
                 <a href={project.video_url} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" className="w-full gap-2 justify-start h-9 text-sm">
-                    <Play className="w-4 h-4" /> Video de Apresentacao
+                    <Play className="w-4 h-4" /> Vídeo de Apresentação
                   </Button>
                 </a>
               )}

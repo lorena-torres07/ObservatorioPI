@@ -83,7 +83,7 @@ export default async function DashboardPage() {
                 <Clock className="w-5 h-5 text-amber-600" />
               </div>
               <div>
-                <p className="font-semibold text-amber-900">{pendingProjects} projeto{pendingProjects > 1 ? 's' : ''} aguardando revisao</p>
+                <p className="font-semibold text-amber-900">{pendingProjects} projeto{pendingProjects > 1 ? 's' : ''} aguardando revisão</p>
                 <p className="text-amber-700 text-sm">Acesse os projetos para aprovar ou devolver.</p>
               </div>
             </div>
@@ -113,9 +113,9 @@ export default async function DashboardPage() {
                 <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
                   <BookOpen className="w-5 h-5 text-emerald-600" />
                 </div>
-                <h3 className="font-semibold text-foreground">Gestao de Turmas</h3>
+                <h3 className="font-semibold text-foreground">Gestão de Turmas</h3>
               </div>
-              <p className="text-muted-foreground text-sm">Atribua professores às turmas e gerencie a organização academica.</p>
+              <p className="text-muted-foreground text-sm">Atribua professores às turmas e gerencie a organização acadêmica.</p>
             </div>
           </Link>
         </div>
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Ola, {firstName}!</h1>
+          <h1 className="text-2xl font-bold text-foreground">Olá, {firstName}!</h1>
           <p className="text-muted-foreground mt-1">Gerencie e acompanhe seus projetos.</p>
         </div>
         <Link href="/dashboard/projetos/novo">
@@ -337,7 +337,7 @@ export default async function DashboardPage() {
         <div>
           <p className="text-sm font-medium text-foreground">Privacidade dos seus dados (LGPD)</p>
           <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-            Seus dados são utilizados exclusivamente para fins academicos e de avaliação.
+            Seus dados são utilizados exclusivamente para fins acadêmicos e de avaliação.
             Consulte nossa <Link href="/privacidade" className="text-primary hover:underline">Política de Privacidade</Link> para mais informações.
           </p>
         </div>

@@ -60,7 +60,7 @@ export default function PrivacyPage() {
                 'Autenticação e controle de acesso à plataforma',
                 'Gestão e avaliação de projetos acadêmicos',
                 'Geração de relatórios institucionais',
-                'Exibicao para professores das turmas atribuidas (conforme organizacao academica)',
+                'Exibição para professores das turmas atribuídas (conforme organização acadêmica)',
                 'Comunicações sobre o status dos projetos',
               ].map(item => (
                 <li key={item} className="flex items-start gap-2">

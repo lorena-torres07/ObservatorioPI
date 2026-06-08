@@ -61,7 +61,7 @@ export function ProjectForm({ classes, mode, project, defaultClassId, singleClas
 
   const handleSave = async (submit = false) => {
     if (!form.title.trim()) { setError('O titulo do projeto e obrigatorio.'); return; }
-    if (!form.short_description.trim()) { setError('A descricao curta e obrigatoria.'); return; }
+    if (!form.short_description.trim()) { setError('A descrição curta e obrigatoria.'); return; }
     if (!form.class_id) { setError('Selecione a turma do projeto.'); return; }
 
     setError('');
@@ -169,7 +169,7 @@ export function ProjectForm({ classes, mode, project, defaultClassId, singleClas
               <>
                 <Label>Turma</Label>
                 <div className="flex h-11 items-center rounded-md border border-input bg-muted/50 px-3 text-sm text-foreground">
-                  {classes.find(c => c.id === form.class_id)?.name ?? 'Turma atribuida'}
+                  {classes.find(c => c.id === form.class_id)?.name ?? 'Turma atribuída'}
                 </div>
               </>
             ) : (

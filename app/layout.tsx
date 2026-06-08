@@ -6,10 +6,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Observatório de Projetos Integradores',
-  description: 'Plataforma de submissao e avaliacao de projetos academicos integradores.',
+  description: 'Plataforma de submissão e avaliação de projetos acadêmicos integradores.',
   openGraph: {
-    title: 'Observatorio de Projetos Integradores',
-    description: 'Plataforma de submissao e avaliacao de projetos academicos integradores.',
+    title: 'Observatório de Projetos Integradores',
+    description: 'Plataforma de submissao e avaliação de projetos acadêmicos integradores.',
     images: [{ url: 'https://bolt.new/static/og_default.png' }],
   },
   twitter: {

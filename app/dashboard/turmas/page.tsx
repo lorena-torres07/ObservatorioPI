@@ -172,7 +172,7 @@ export default function ClassesManagementPage() {
     <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Gestao de Turmas</h1>
+          <h1 className="text-2xl font-bold text-foreground">Gestão de Turmas</h1>
           <p className="text-muted-foreground mt-1 text-sm">Crie turmas, atribua professores e matricule alunos.</p>
         </div>
         <Button onClick={() => setShowModal(true)} className="gap-2 shrink-0">
@@ -378,7 +378,7 @@ export default function ClassesManagementPage() {
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="cls_desc">Descricao (opcional)</Label>
+                <Label htmlFor="cls_desc">Descrição (opcional)</Label>
                 <Textarea id="cls_desc" value={form.description} onChange={e => setForm(p => ({ ...p, description: e.target.value }))} placeholder="Informacoes adicionais sobre a turma..." className="min-h-[80px]" />
               </div>
               <div className="flex gap-3 pt-2">
