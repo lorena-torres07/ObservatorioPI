@@ -1,8 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation'; 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChevronRight, ChartBar as BarChart3 } from 'lucide-react';
+import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChevronRight, ChartBar as BarChart3, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Profile } from '@/lib/supabase/types';
 
@@ -48,7 +49,25 @@ const roleLabels: Record<string, string> = {
 
 export function Sidebar({ profile }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter(); 
   const navItems = navByRole[profile.role] ?? navByRole.student;
+  
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // NOVA FUNÇÃO: Gerencia o logout mais rápido sem recarregar a tela do zero
+  const handleSignOut = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+    setIsLoggingOut(true);
+
+    try {
+      await fetch('/auth/signout', { method: 'POST' });
+      router.push('/login');
+      router.refresh(); 
+    } catch (error) {
+      console.error('Erro ao sair:', error);
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <aside className="w-64 shrink-0 hidden lg:flex flex-col bg-card border-r border-border h-screen sticky top-0">
@@ -98,15 +117,23 @@ export function Sidebar({ profile }: SidebarProps) {
           <Settings className="w-4 h-4" />
           Configurações
         </Link>
-        <form action="/auth/signout" method="POST">
+        
+        {/* Formulário com a navegação suave */}
+        <form onSubmit={handleSignOut}>
           <button
             type="submit"
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all"
+            disabled={isLoggingOut}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all disabled:opacity-50"
           >
-            <LogOut className="w-4 h-4" />
-            Sair
+            {isLoggingOut ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <LogOut className="w-4 h-4" />
+            )}
+            {isLoggingOut ? 'Saindo...' : 'Sair'}
           </button>
         </form>
+
         <div className="px-3 py-2 mt-1">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
