@@ -17,6 +17,9 @@ type ClassInfo = {
 
 type ProjectWithProfile = Project & {
   profiles?: Pick<Profile, 'full_name'> | null;
+  student_email?: string;
+  professor_email?: string;
+  admin_email?: string;
 };
 
 type Props = {
@@ -86,7 +89,8 @@ export function ProjectsClient({ role, classes, projects }: Props) {
     return result;
   }, [projects, selectedClassId, searchQuery, classes]);
 
-  const isProfOrAdmin = role === 'professor' || role === 'admin';
+  // Atualização: Permite que Admin, Professor e Empresa vejam a barra e filtros completos
+  const canFilterByClass = role === 'professor' || role === 'admin' || role === 'partner';
 
   return (
     <div className="space-y-6">
@@ -123,7 +127,7 @@ export function ProjectsClient({ role, classes, projects }: Props) {
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
           placeholder={
-            isProfOrAdmin
+            canFilterByClass
               ? 'Buscar por projeto, turma, curso, ano ou mês...'
               : 'Buscar por nome do projeto ou mês...'
           }
@@ -141,8 +145,8 @@ export function ProjectsClient({ role, classes, projects }: Props) {
 
       {/* Filters row */}
       <div className="flex flex-wrap gap-3 items-center">
-        {/* Class filter — professor e admin */}
-        {isProfOrAdmin && classes.length > 0 && (
+        {/* Class filter — admin, professor e empresa */}
+        {canFilterByClass && classes.length > 0 && (
           <div className="flex gap-1.5 flex-wrap">
             <button
               onClick={() => setSelectedClassId('')}
@@ -187,6 +191,8 @@ export function ProjectsClient({ role, classes, projects }: Props) {
               ? `Nenhum projeto corresponde a "${searchQuery}".`
               : selectedClassId
               ? 'Nenhum projeto nesta turma.'
+              : role === 'partner'
+              ? 'Nenhum projeto disponível na vitrine ainda.'
               : 'Nenhum projeto submetido ainda.'}
           </p>
 
