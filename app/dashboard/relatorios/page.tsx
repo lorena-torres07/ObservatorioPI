@@ -35,7 +35,10 @@ export default async function ReportsPage() {
   const draftCount = projects.filter(p => p.status === 'draft').length;
   const submittedCount = projects.filter(p => p.status === 'submitted').length;
   const underReviewCount = projects.filter(p => p.status === 'under_review').length;
-  const approvedCount = projects.filter(p => p.status === 'approved').length;
+  
+  
+  const approvedCount = projects.filter(p => p.status === 'approved' || p.status === 'featured').length;
+  
   const featuredCount = projects.filter(p => p.status === 'featured').length;
   const rejectedCount = projects.filter(p => p.status === 'rejected').length;
 
