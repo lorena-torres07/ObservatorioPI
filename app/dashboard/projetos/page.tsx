@@ -20,7 +20,7 @@ export default async function ProjectsPage() {
   // Fetch classes based on role
   let classes: { id: string; name: string; course: string; year: number; semester: string }[] = [];
 
-  if (profile.role === 'admin') {
+  if (profile.role === 'admin' || profile.role === 'partner') {
     const { data } = await supabase
       .from('classes')
       .select('id, name, course, year, semester')
@@ -42,7 +42,7 @@ export default async function ProjectsPage() {
     }
   }
 
-  // Professor with no classes
+  // Professor sem turmas
   if (profile.role === 'professor' && classes.length === 0) {
     return (
       <div className="p-6 sm:p-8 max-w-6xl mx-auto space-y-6">
@@ -63,10 +63,22 @@ export default async function ProjectsPage() {
     );
   }
 
+  // Busca email do admin (só para partner)
+  let adminEmail = '';
+  if (profile.role === 'partner') {
+    const { data: adminData } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('role', 'admin')
+      .limit(1)
+      .maybeSingle();
+    adminEmail = adminData?.email ?? '';
+  }
+
   // Fetch projects
   let query = supabase
     .from('projects')
-    .select('*')
+    .select('*, profiles!owner_id(email, full_name)')
     .order('updated_at', { ascending: false });
 
   if (profile.role === 'student') {
@@ -74,11 +86,36 @@ export default async function ProjectsPage() {
   } else if (profile.role === 'professor') {
     const classIds = classes.map(c => c.id);
     query = query.in('class_id', classIds);
+  } else if (profile.role === 'partner') {
+    query = query.in('status', ['approved', 'featured']);
   }
-  // admin: fetch all
 
   const { data: projects } = await query;
-  const typedProjects = (projects ?? []) as Project[];
+
+  // Busca email do professor por turma (só para partner)
+  let professorEmailsByClassId: Record<string, string> = {};
+  if (profile.role === 'partner' && projects && projects.length > 0) {
+    const classIds = [...new Set(projects.map((p: any) => p.class_id).filter(Boolean))];
+    if (classIds.length > 0) {
+      const { data: cpData } = await supabase
+        .from('class_professors')
+        .select('class_id, profiles!professor_id(email)')
+        .in('class_id', classIds);
+      (cpData ?? []).forEach((cp: any) => {
+        if (cp.class_id && cp.profiles?.email) {
+          professorEmailsByClassId[cp.class_id] = cp.profiles.email;
+        }
+      });
+    }
+  }
+
+  const typedProjects = (projects ?? []).map((p: any) => ({
+    ...p,
+    student_email: p.profiles?.email ?? '',
+    professor_email: professorEmailsByClassId[p.class_id] ?? '',
+    admin_email: adminEmail,
+    profiles: p.profiles ? { full_name: p.profiles.full_name } : null,
+  }));
 
   return (
     <div className="p-6 sm:p-8 max-w-6xl mx-auto">
