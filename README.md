@@ -1,173 +1,134 @@
-<div align="center">
-  
-# 🔭 ObservatorioPI
+# 🔭 Observatório PI
 
-> A web platform to centralize, organize, and showcase the Integrative Projects (PI) of SENAC College students.
-> 
-> Plataforma web para centralizar, organizar e valorizar os Projetos Integradores (PI) dos alunos da Faculdade SENAC. 
- 
-<div/>
-  
----
+> Plataforma web para submissão, avaliação e vitrine de Projetos Integradores acadêmicos, conectando alunos, professores e empresas parceiras.
 
-<details align="left">
-  <summary>
-    <samp><b>📋 System Description</b></samp>
-  </summary>
-  
-
-  <br>
-  
-The <strong>Observatório de Projetos Integradores</strong> is a web platform created to solve the disorganization in the submission and evaluation process of Integrative Projects at SENAC College. Students submit their projects, professors evaluate them, and companies follow the work, all in a single centralized environment.
-</details>
-  
-<details align="left">
-  <summary>
-    <samp><b>🎯 Objective </b></samp>
-  </summary>
-  
-
-  <br>
-  
-To centralize, organize, and give visibility to the students' PIs at SENAC College, offering:
-
-- Project organization and storage 
-- Optimized correction and evaluation process 
-- Connection and visibility through portfolio
-</details>
-
-
-
-<details align="left">
-  <summary>
-    <samp><b>⚠️ Problem</b></samp>
-  </summary>
-  
-
-  <br>
-  
-At SENAC College, Integrative Projects are submitted through different channels, which causes:
-
-- Difficulty in version control
-- Loss of information and documents
-- Poorly optimized evaluation process
-- Difficulty in future access and queries
-- Disorganization and invisibility/devaluation of projects
-</details>
-
-<div align="center">
-
----
-  
-## 🛠️ Technologies Used
-
-
-| Technology | Description |
-|------------|-------------|
-| **React** | JavaScript library for building the user interface |
-| **Node.js** | JavaScript runtime environment for the back-end |
-| **Supabase** | Open source platform based on PostgreSQL, RLS, auth.users |
-| **Tailwind CSS** | Utility-first CSS framework |
-| **AI Mentor** | Integrated via Antigravity (replaces VS Code) |
-
-</div> 
-  
----
-
-## 📄 Business Rules
-
-??????????
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-13.5-black)](https://nextjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-green)](https://supabase.com/)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)](https://vercel.com/)
+[![LGPD](https://img.shields.io/badge/Compliance-LGPD-blueviolet)](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm)
 
 ---
 
-## 🔗 Documentation
+## 📋 Visão Geral
 
-> _Documentation link coming soon._
+O **Observatório PI** é um ecossistema digital desenvolvido como Projeto Integrador do curso de **Análise e Desenvolvimento de Sistemas** da **FATEC**. A plataforma permite que alunos submetam seus projetos, professores os avaliem, e empresas parceiras descubram talentos e projetos de interesse.
 
----
+### Funcionalidades por perfil
 
-<details align="center">
-  <summary>
-    <samp><b> Portuguese: </b></samp>
-  </summary>
-
-  <br>
-
-  <details align="left">
-  <summary>
-    <samp><b>📋 Descrição do Sistema</b></samp>
-  </summary>
-  
-
-  <br>
-  
-O <strong>Observatório de Projetos Integradores</strong> é uma plataforma web criada para resolver a desorganização no processo de submissão e avaliação dos Projetos Integradores da Faculdade SENAC. Alunos submetem seus projetos, professores realizam avaliações e empresas acompanham os trabalhos — tudo em um único ambiente centralizado.
-</details>
-  
-<details align="left">
-  <summary>
-    <samp><b>🎯 Objetivo </b></samp>
-  </summary>
-  
-
-  <br>
-  
-Centralizar, organizar e dar visibilidade aos PIs dos alunos da Faculdade SENAC, oferecendo:
-
-- Organização e armazenamento dos projetos
-- Otimização do processo de correção e avaliação
-- Conexão e visibilidade através de portfólio
-
-
-</details>
-
-
-
-<details align="left">
-  <summary>
-    <samp><b>⚠️ Problema </b></samp>
-  </summary>
-  
-
-  <br>
-  
-Na Faculdade SENAC, os Projetos Integradores são enviados por diferentes meios, o que gera:
-
-- Dificuldade no controle de versões
-- Perda de informações e documentos
-- Processo de avaliação pouco otimizado
-- Dificuldade de acesso e consultas futuras
-- Desorganização e desvalorização/invisibilidade dos projetos
-- 
-</details>
-
-<div align="center">
-
----
-  
-## 🛠️ Tecnologias Utilizadas
-
-| Tecnologia | Descrição |
-|------------|-----------|
-| **React** | Biblioteca JavaScript para construção da interface |
-| **Node.js** | Ambiente de execução JavaScript no back-end |
-| **Supabase** | Plataforma open source baseada em PostgreSQL, RLS, auth.users |
-| **Tailwind CSS** | Framework CSS utilitário |
-| **IA Mentor** | Integrada via Antigravity (substitui o VS Code) |
-
+| Perfil | Funcionalidades |
+|--------|----------------|
+| **Aluno** | Submeter projetos, acompanhar status de avaliação, gerenciar membros da equipe |
+| **Professor** | Avaliar projetos por critérios, dar feedback, aprovar ou devolver projetos |
+| **Empresa Parceira** | Visualizar vitrine de projetos aprovados, enviar interesse por e-mail |
+| **Admin** | Gerenciar usuários, turmas, relatórios e toda a plataforma |
 
 ---
 
-## 📄 Regras de Negócio
+## 🛠️ Stack Tecnológica
 
+### Frontend
+- **Next.js 13.5** — Framework React com App Router e Server Components
+- **TypeScript 5.2** — Tipagem estática
+- **Tailwind CSS 3.3** — Estilização utilitária
+- **shadcn/ui + Radix UI** — Componentes acessíveis e customizáveis
+- **Lucide React** — Ícones
+- **React Hook Form + Zod** — Formulários com validação
+- **Recharts** — Gráficos e relatórios
 
-??????????
+### Backend & Banco de Dados
+- **Supabase** — Backend as a Service
+  - **PostgreSQL** — Banco de dados relacional
+  - **Supabase Auth** — Autenticação com email/senha
+  - **Row Level Security (RLS)** — Controle de acesso por linha no banco
+  - **Supabase Storage** — Armazenamento de imagens de capa dos projetos
+  - **Supabase SSR** (`@supabase/ssr`) — Integração server-side com Next.js
+
+### Deploy & Infraestrutura
+- **Vercel** — Deploy contínuo via GitHub
+- **GitHub** — Controle de versão
+
 ---
-## 🔗 Documentação
 
-> _Documentation link coming soon._
+## 🗄️ Estrutura do Banco de Dados (Supabase)
 
+| Tabela | Descrição |
+|--------|-----------|
+| `profiles` | Usuários da plataforma (aluno, professor, partner, admin) |
+| `projects` | Projetos integradores submetidos |
+| `classes` | Turmas acadêmicas |
+| `class_professors` | Vínculo professor ↔ turma |
+| `class_students` | Vínculo aluno ↔ turma |
+| `evaluations` | Avaliações dos projetos |
+| `evaluation_criteria` | Critérios de avaliação configuráveis |
+| `evaluation_scores` | Notas por critério |
+| `project_members` | Membros de cada projeto |
+| `project_comments` | Comentários nos projetos |
+| `project_tags` | Tags dos projetos |
+| `ai_recommendations` | Recomendações geradas por IA |
+| `privacy_consents` | Registros de consentimento LGPD |
 
+---
 
+## 🔒 Privacidade e LGPD
 
+A plataforma foi desenvolvida com **privacy by design** em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018):
 
+- **Consentimento explícito** na criação de conta
+- **Row Level Security** no Supabase — cada usuário acessa apenas seus próprios dados
+- **Painel de privacidade** onde o usuário pode consultar e gerenciar seus dados
+- **Minimização de dados** — apenas informações necessárias são coletadas
+
+---
+
+## ⚙️ Rodando Localmente
+
+### Pré-requisitos
+- [Node.js](https://nodejs.org/) v18+
+- Conta no [Supabase](https://supabase.com/)
+
+### Configuração
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/allanydias/ObservatorioPI.git
+cd ObservatorioPI
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Crie o arquivo `.env.local` na raiz:
+```env
+NEXT_PUBLIC_SUPABASE_URL=sua_url_do_supabase
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima
+```
+
+4. Execute o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+
+Acesse `http://localhost:3000`
+
+---
+
+## 👥 Equipe
+
+| Nome | Função |
+|------|--------|
+| José Luis | Pesquisador |
+| Mariana Oliveira | Designer UX/UI |
+| Allany Dias | Vice-Líder · Desenvolvedora Front-end |
+| Mayara Marina | QA Tester · Comunicação e Apresentação |
+| Lorena Torres | Líder · Desenvolvedora Back-end |
+
+**Orientador(a):** Prof. ___________
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
