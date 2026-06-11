@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation'; 
 import Link from 'next/link';
-import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChevronRight, ChartBar as BarChart3, Loader2 } from 'lucide-react';
+// Adicionado o ícone Sparkles na importação do lucide-react
+import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChevronRight, ChartBar as BarChart3, Loader2, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Profile } from '@/lib/supabase/types';
 
@@ -13,17 +14,20 @@ interface NavItem {
   icon: React.ElementType;
 }
 
+// Atualizado: Todos os perfis ganharam o 'Mentor IA' ou 'Assistente IA' apontando para /dashboard/chat
 const navByRole: Record<string, NavItem[]> = {
   student: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Meus Projetos', href: '/dashboard/projetos', icon: FolderOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
+    { label: 'Mentor IA', href: '/dashboard/chat', icon: Sparkles },
   ],
   professor: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Turmas', href: '/dashboard/turmas', icon: Users },
     { label: 'Projetos', href: '/dashboard/projetos', icon: FolderOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
+    { label: 'Assistente IA', href: '/dashboard/chat', icon: Sparkles },
   ],
   admin: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
@@ -32,11 +36,12 @@ const navByRole: Record<string, NavItem[]> = {
     { label: 'Turmas', href: '/dashboard/turmas', icon: BookOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
     { label: 'Relatórios', href: '/dashboard/relatorios', icon: BarChart3 },
+    { label: 'Gerenciador IA', href: '/dashboard/chat', icon: Sparkles },
   ],
-  // Atualização: Links exclusivos para a Empresa Parceira (Vitrine)
   partner: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Projetos', href: '/dashboard/projetos', icon: FolderOpen },
+    { label: 'Assistente IA', href: '/dashboard/chat', icon: Sparkles },
   ],
 };
 
@@ -57,8 +62,7 @@ export function Sidebar({ profile }: SidebarProps) {
   const navItems = navByRole[profile.role] ?? navByRole.student;
   
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-
-  // NOVA FUNÇÃO: Gerencia o logout mais rápido sem recarregar a tela do zero
+  //Gerencia o logout mais rápido sem recarregar a tela do zero
   const handleSignOut = async (e: React.FormEvent) => {
     e.preventDefault(); 
     setIsLoggingOut(true);
