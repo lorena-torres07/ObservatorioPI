@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChartBar as BarChart3, Menu, X, KeyRound, Loader2 } from 'lucide-react';
+import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChartBar as BarChart3, Menu, X, KeyRound, Loader2, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NotificationBell } from '@/components/dashboard/notification-bell';
 import type { Profile } from '@/lib/supabase/types';
 
 const navByRole: Record<string, { label: string; href: string; icon: React.ElementType }[]> = {
@@ -12,12 +13,14 @@ const navByRole: Record<string, { label: string; href: string; icon: React.Eleme
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Meus Projetos', href: '/dashboard/projetos', icon: FolderOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
+    { label: 'Mentor IA', href: '/dashboard/chat', icon: Sparkles },
   ],
   professor: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Turmas', href: '/dashboard/turmas', icon: Users },
     { label: 'Projetos', href: '/dashboard/projetos', icon: FolderOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
+    { label: 'Assistente IA', href: '/dashboard/chat', icon: Sparkles },
   ],
   admin: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
@@ -27,19 +30,21 @@ const navByRole: Record<string, { label: string; href: string; icon: React.Eleme
     { label: 'Turmas', href: '/dashboard/turmas', icon: BookOpen },
     { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Award },
     { label: 'Relatórios', href: '/dashboard/relatorios', icon: BarChart3 },
+    { label: 'Gerenciador IA', href: '/dashboard/chat', icon: Sparkles },
   ],
   partner: [
-  { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Projetos', href: '/dashboard/projetos', icon: FolderOpen },
-],
+    { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Projetos', href: '/dashboard/projetos', icon: FolderOpen },
+    { label: 'Assistente IA', href: '/dashboard/chat', icon: Sparkles },
+  ],
 };
 
 export function MobileHeader({ profile }: { profile: Profile }) {
   const [open, setOpen] = useState(false);
-  
+
   // NOVO: Estado para controlar o botão de saída
-  const [isLoggingOut, setIsLoggingOut] = useState(false); 
-  
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
   const pathname = usePathname();
   const navItems = navByRole[profile.role] ?? navByRole.student;
 
@@ -52,9 +57,12 @@ export function MobileHeader({ profile }: { profile: Profile }) {
           </div>
           <span className="font-bold text-foreground text-sm">Observatório PI</span>
         </Link>
-        <button onClick={() => setOpen(!open)} className="p-2 rounded-lg hover:bg-muted transition-colors">
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <NotificationBell />
+          <button onClick={() => setOpen(!open)} className="p-2 rounded-lg hover:bg-muted transition-colors">
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </header>
 
       {open && (
@@ -89,11 +97,11 @@ export function MobileHeader({ profile }: { profile: Profile }) {
           <Link href="/dashboard/configuracoes" onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-all">
             <Settings className="w-4 h-4" />Configurações
           </Link>
-          
+
           {/* CORREÇÃO AQUI: Formulário interceptado para gerar feedback visual */}
           <form action="/auth/signout" method="POST" onSubmit={() => setIsLoggingOut(true)}>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isLoggingOut}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-all disabled:opacity-50"
             >
@@ -105,7 +113,7 @@ export function MobileHeader({ profile }: { profile: Profile }) {
               {isLoggingOut ? 'Saindo...' : 'Sair'}
             </button>
           </form>
-          
+
         </div>
       </div>
     </>

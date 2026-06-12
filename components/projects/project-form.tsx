@@ -310,7 +310,7 @@ export function ProjectForm({
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="semester_year">
-              Semestre <span className="text-xs text-muted-foreground">(1 a 8)</span>
+              Semestre: <span className="text-xs text-muted-foreground"></span>
             </Label>
             <Input
               id="semester_year"
@@ -505,14 +505,14 @@ export function ProjectForm({
 
         {selectedFile && !fileError && (
           <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => { setSelectedFile(null); setFileError(''); }}
-            className="gap-2 text-muted-foreground hover:text-destructive"
-          >
-            <X className="w-3.5 h-3.5" /> Remover arquivo
-          </Button>
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => { setSelectedFile(null); setFileError(''); }}
+          className="gap-2 text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
+        >
+          <X className="w-3.5 h-3.5" /> Remover arquivo
+        </Button>
         )}
       </div>
 

@@ -164,6 +164,54 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['class_students']['Row'], 'id' | 'created_at'>;
         Update: Partial<Database['public']['Tables']['class_students']['Insert']>;
       };
+      project_versions: {
+        Row: {
+          id: string;
+          project_id: string;
+          user_id: string;
+          version_number: number;
+          title: string;
+          description: string | null;
+          short_description: string | null;
+          technologies: string[] | null;
+          repository_url: string | null;
+          demo_url: string | null;
+          video_url: string | null;
+          file_url: string | null;
+          file_name: string | null;
+          file_size_bytes: number | null;
+          change_summary: string | null;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['project_versions']['Row'], 'id' | 'created_at'>;
+        Update: Partial<Database['public']['Tables']['project_versions']['Insert']>;
+      };
+      notifications: {
+        Row: {
+          id: string;
+          user_id: string;
+          type: string;
+          title: string;
+          message: string;
+          project_id: string | null;
+          read_at: string | null;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['notifications']['Row'], 'id' | 'created_at'>;
+        Update: Partial<Database['public']['Tables']['notifications']['Insert']>;
+      };
+      activity_logs: {
+        Row: {
+          id: string;
+          user_id: string | null;
+          project_id: string | null;
+          action: string;
+          metadata: Record<string, unknown> | null;
+          created_at: string;
+        };
+        Insert: Omit<Database['public']['Tables']['activity_logs']['Row'], 'id' | 'created_at'>;
+        Update: Partial<Database['public']['Tables']['activity_logs']['Insert']>;
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -183,3 +231,6 @@ export type ProjectMember = Database['public']['Tables']['project_members']['Row
 export type AiRecommendation = Database['public']['Tables']['ai_recommendations']['Row'];
 export type ClassProfessor = Database['public']['Tables']['class_professors']['Row'];
 export type ClassStudent = Database['public']['Tables']['class_students']['Row'];
+export type ProjectVersion = Database['public']['Tables']['project_versions']['Row'];
+export type Notification = Database['public']['Tables']['notifications']['Row'];
+export type ActivityLog = Database['public']['Tables']['activity_logs']['Row'];

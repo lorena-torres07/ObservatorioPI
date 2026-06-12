@@ -72,6 +72,12 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
     professorName: professorProfile?.full_name ?? '',
   } : null;
 
+  const { data: versions } = await supabase
+    .from('project_versions')
+    .select('id, version_number, change_summary, created_at, user_id, profiles(full_name)')
+    .eq('project_id', project.id)
+    .order('version_number', { ascending: false });
+
   return (
     <div className="p-6 sm:p-8 max-w-4xl mx-auto">
       <ProjectDetail
@@ -86,6 +92,7 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
         isAdmin={isAdmin}
         isProfessor={isProfessor} 
         classInfo={classInfo}
+        versions={(versions ?? []) as unknown as import('@/components/projects/project-detail').VersionData[]}
       />
     </div>
   );

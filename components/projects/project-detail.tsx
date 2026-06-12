@@ -21,6 +21,15 @@ const statusConfig: Record<string, { label: string; classes: string; icon: React
   rejected: { label: 'Devolvido', classes: 'bg-red-100 text-red-700 border-red-200', icon: AlertCircle },
 };
 
+export interface VersionData {
+  id: string;
+  version_number: number;
+  change_summary: string | null;
+  created_at: string;
+  user_id: string;
+  profiles: { full_name: string | null } | null;
+}
+
 export interface EvaluationData {
   id: string;
   overall_score: number | null;
@@ -40,6 +49,7 @@ interface ProjectDetailProps {
   classes: { id: string; name: string; course: string; year: number; semester: string }[];
   members: { id: string; user_id: string; role: string; profiles: { full_name: string | null; email: string | null; course: string | null } | null;
 }[];
+  versions?: VersionData[];
   evaluations: EvaluationData[];
   ownerProfile: { full_name: string; email: string; course: string } | null;
   isAdmin: boolean;
@@ -47,7 +57,7 @@ interface ProjectDetailProps {
   classInfo?: { name: string; semester: string; professorName: string } | null;
 }
 
-export function ProjectDetail({ project, canEdit, isOwner, role, members = [], evaluations = [], ownerProfile, isAdmin, isProfessor, classInfo }: ProjectDetailProps) {
+export function ProjectDetail({ project, canEdit, isOwner, role, members = [], versions = [], evaluations = [], ownerProfile, isAdmin, isProfessor, classInfo }: ProjectDetailProps) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -106,15 +116,43 @@ export function ProjectDetail({ project, canEdit, isOwner, role, members = [], e
       if (newStatus === 'featured') {
         updates.featured_at = new Date().toISOString();
       }
-      const { error: err } = await supabase.from('projects').update(updates).eq('id', project.id);
+      const { error: err } = await supabase
+        .from('projects')
+        .update(updates)
+        .eq('id', project.id);
       if (err) throw err;
+
+      // Notifica o dono (RF06)
+      const { data: proj } = await supabase
+        .from('projects')
+        .select('owner_id, title')
+        .eq('id', project.id)
+        .single();
+
+      const statusLabels: Record<string, string> = {
+        approved: 'aprovado ✅',
+        rejected: 'devolvido para correção ⚠️',
+        under_review: 'em revisão 🔍',
+        featured: 'destacado no portfólio ⭐',
+      };
+
+      if (proj) {
+        await supabase.from('notifications').insert({
+          user_id: proj.owner_id,
+          type: 'status_change',
+          title: 'Status do projeto atualizado',
+          message: `Seu projeto "${proj.title}" foi ${statusLabels[newStatus] ?? newStatus}.`,
+          project_id: project.id,
+        });
+      }
+
       router.refresh();
     } catch {
       setError('Erro ao alterar status.');
     } finally {
       setChangingStatus(null);
     }
-  }; // 👈 fecha handleStatusChange corretamente
+  };
 
   const handleSaveEval = async () => {
     setSavingEval(true);
@@ -133,6 +171,24 @@ export function ProjectDetail({ project, canEdit, isOwner, role, members = [], e
         evaluated_at: new Date().toISOString(),
       });
       if (err) throw err;
+
+      // Notifica o dono (RF06)
+      const { data: proj } = await supabase
+        .from('projects')
+        .select('owner_id, title')
+        .eq('id', project.id)
+        .single();
+
+      if (proj) {
+        await supabase.from('notifications').insert({
+          user_id: proj.owner_id,
+          type: 'evaluation',
+          title: 'Seu projeto foi avaliado!',
+          message: `O projeto "${proj.title}" recebeu uma avaliação${evalScore ? ` com nota ${evalScore}` : ''}.`,
+          project_id: project.id,
+        });
+      }
+
       setShowEvalModal(false);
       setEvalScore('');
       setEvalFeedback('');
@@ -266,6 +322,56 @@ export function ProjectDetail({ project, canEdit, isOwner, role, members = [], e
               </div>
             </div>
           )}
+
+          {/* Histórico de Versões (RF01/RF12) */}
+          {versions.length > 0 && (
+            <div className="bg-card rounded-2xl border border-border p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <GitBranch className="w-4 h-4 text-muted-foreground" />
+                <h2 className="font-semibold text-foreground">Histórico de Versões</h2>
+                <span className="text-xs text-muted-foreground font-normal">
+                  ({versions.length} {versions.length === 1 ? 'versão' : 'versões'})
+                </span>
+              </div>
+              <div className="space-y-3">
+                {versions.map((v, i) => (
+                  <div key={v.id} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                        i === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                      }`}>
+                        v{v.version_number}
+                      </div>
+                      {i < versions.length - 1 && (
+                        <div className="w-px flex-1 bg-border mt-1" />
+                      )}
+                    </div>
+                    <div className="pb-4 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-medium text-foreground">
+                          {v.profiles?.full_name ?? 'Usuário'}
+                        </span>
+                        {i === 0 && (
+                          <span className="text-[10px] bg-primary/10 text-primary font-medium px-1.5 py-0.5 rounded-full">
+                            atual
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        {v.change_summary ?? 'Atualização do projeto'}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground/60 mt-0.5">
+                        {new Date(v.created_at).toLocaleDateString('pt-BR', {
+                          day: '2-digit', month: 'short', year: 'numeric',
+                          hour: '2-digit', minute: '2-digit'
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -340,7 +446,7 @@ export function ProjectDetail({ project, canEdit, isOwner, role, members = [], e
                 <Button
                   variant="outline"
                   onClick={() => setShowDeleteConfirm(true)}
-                  className="w-full gap-2 justify-start h-10 text-destructive border-destructive/30 hover:bg-destructive/10"
+                  className="w-full gap-2 text-red-500 border-red-500 hover:bg-red-50 hover:text-red-600 hover:border-red-300"
                 >
                   <Trash2 className="w-4 h-4" /> Excluir Projeto
                 </Button>

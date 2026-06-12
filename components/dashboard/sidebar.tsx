@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation'; 
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-// Adicionado o ícone Sparkles na importação do lucide-react
-import { BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings, LogOut, ChevronRight, ChartBar as BarChart3, Loader2, Sparkles } from 'lucide-react';
+import {
+  BookOpen, LayoutDashboard, FolderOpen, Award, Users, Settings,
+  LogOut, ChevronRight, ChartBar as BarChart3, Loader2, Sparkles
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Profile } from '@/lib/supabase/types';
+import { NotificationBell } from '@/components/dashboard/notification-bell';
 
 interface NavItem {
   label: string;
@@ -14,7 +17,6 @@ interface NavItem {
   icon: React.ElementType;
 }
 
-// Atualizado: Todos os perfis ganharam o 'Mentor IA' ou 'Assistente IA' apontando para /dashboard/chat
 const navByRole: Record<string, NavItem[]> = {
   student: [
     { label: 'Início', href: '/dashboard', icon: LayoutDashboard },
@@ -58,19 +60,17 @@ const roleLabels: Record<string, string> = {
 
 export function Sidebar({ profile }: SidebarProps) {
   const pathname = usePathname();
-  const router = useRouter(); 
+  const router = useRouter();
   const navItems = navByRole[profile.role] ?? navByRole.student;
-  
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  //Gerencia o logout mais rápido sem recarregar a tela do zero
-  const handleSignOut = async (e: React.FormEvent) => {
-    e.preventDefault(); 
-    setIsLoggingOut(true);
 
+  const handleSignOut = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggingOut(true);
     try {
       await fetch('/auth/signout', { method: 'POST' });
       router.push('/login');
-      router.refresh(); 
+      router.refresh();
     } catch (error) {
       console.error('Erro ao sair:', error);
       setIsLoggingOut(false);
@@ -79,8 +79,8 @@ export function Sidebar({ profile }: SidebarProps) {
 
   return (
     <aside className="w-64 shrink-0 hidden lg:flex flex-col bg-card border-r border-border h-screen sticky top-0">
-      {/* Logo */}
-      <div className="p-5 border-b border-border">
+      {/* Logo + Sininho */}
+      <div className="p-5 border-b border-border flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <BookOpen className="w-4 h-4 text-primary-foreground" />
@@ -90,13 +90,16 @@ export function Sidebar({ profile }: SidebarProps) {
             <div className="text-muted-foreground text-xs mt-0.5">{roleLabels[profile.role]}</div>
           </div>
         </Link>
+        <NotificationBell />
       </div>
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
         {navItems.map(item => {
           const Icon = item.icon;
-          const active = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href));
+          const active =
+            pathname === item.href ||
+            (item.href !== '/dashboard' && pathname.startsWith(item.href));
           return (
             <Link
               key={item.href}
@@ -125,8 +128,7 @@ export function Sidebar({ profile }: SidebarProps) {
           <Settings className="w-4 h-4" />
           Configurações
         </Link>
-        
-        {/* Formulário com a navegação suave */}
+
         <form onSubmit={handleSignOut}>
           <button
             type="submit"

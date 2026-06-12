@@ -42,7 +42,7 @@ export function NotificationBell() {
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
 
-          <div className="absolute right-0 top-10 z-50 w-80 bg-card border border-border rounded-2xl shadow-xl overflow-hidden">
+          <div className="fixed left-4 right-4 sm:left-auto sm:right-auto lg:left-4 top-16 lg:top-16 z-50 sm:w-72 lg:w-72 max-w-[calc(100vw-2rem)] bg-card border border-border rounded-2xl shadow-xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-border">
               <div className="flex items-center gap-2">
                 <Bell className="w-4 h-4 text-foreground" />
