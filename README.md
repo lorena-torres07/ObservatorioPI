@@ -157,9 +157,9 @@ Developed by **Group Observar** — Faculdade SENAC 2026:
 | Name | Role | GitHub |
 |---|---|---|
 | Allany Dias | Full Stack Dev & AI | [GitHub](https://github.com/allanydias) |
-| Lorena Torres | Full Stack Dev | [GitHub](https://github.com/lorena-torres07) |
-| José Luis | Backend Developer | GitHub |
-| Mariana Oliveira | UI/UX & Frontend | GitHub |
+| Lorena Torres | Backend Developer| [GitHub](https://github.com/lorena-torres07) |
+| José Luis | Requirements | GitHub |
+| Mariana Oliveira | UI/UX | GitHub |
 | Mayara Marina | Requirements & Documentation | GitHub |
 
 *Academic Advisor: Prof. Guibson Barros*
@@ -356,9 +356,9 @@ Desenvolvido pelo **Grupo Observar** — Faculdade SENAC 2026:
 | Nome | Papel | GitHub |
 |---|---|---|
 | Allany Dias | Dev Full Stack & IA | [GitHub](https://github.com/allanydias) |
-| Lorena Torres | Dev Full Stack | [GitHub](https://github.com/lorena-torres07) |
-| José Luis | Dev Backend | GitHub |
-| Mariana Oliveira | UI/UX & Frontend | GitHub |
+| Lorena Torres | Dev Backend| [GitHub](https://github.com/lorena-torres07) |
+| José Luis | Requisitos | GitHub |
+| Mariana Oliveira | UI/UX  | GitHub |
 | Mayara Marina | Requisitos & Documentação | GitHub |
 
 *Professor Orientador: Prof. Guibson Barros *
