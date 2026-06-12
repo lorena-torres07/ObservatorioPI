@@ -38,7 +38,8 @@ interface ProjectDetailProps {
   isOwner: boolean;
   role: string;
   classes: { id: string; name: string; course: string; year: number; semester: string }[];
-  members: unknown[];
+  members: { id: string; user_id: string; role: string; profiles: { full_name: string | null; email: string | null; course: string | null } | null;
+}[];
   evaluations: EvaluationData[];
   ownerProfile: { full_name: string; email: string; course: string } | null;
   isAdmin: boolean;
@@ -46,7 +47,7 @@ interface ProjectDetailProps {
   classInfo?: { name: string; semester: string; professorName: string } | null;
 }
 
-export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [], ownerProfile, isAdmin, isProfessor, classInfo }: ProjectDetailProps) {
+export function ProjectDetail({ project, canEdit, isOwner, role, members = [], evaluations = [], ownerProfile, isAdmin, isProfessor, classInfo }: ProjectDetailProps) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -282,6 +283,40 @@ export function ProjectDetail({ project, canEdit, isOwner, role, evaluations = [
                   <div className="text-muted-foreground text-xs truncate">{ownerProfile.email}</div>
                   {ownerProfile.course && <div className="text-muted-foreground text-xs truncate">{ownerProfile.course}</div>}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Membros do Grupo */}
+          {members && members.length > 0 && (
+            <div className="bg-card rounded-2xl border border-border p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                <h3 className="font-semibold text-foreground text-sm">
+                  Membros do Grupo
+                  <span className="ml-1.5 text-xs font-normal text-muted-foreground">
+                    ({members.length})
+                  </span>
+                </h3>
+              </div>
+              <div className="space-y-2.5">
+                {members.map((m) => {
+                  const name = m.profiles?.full_name ?? 'Membro';
+                  const email = m.profiles?.email;
+                  const course = m.profiles?.course;
+                  return (
+                    <div key={m.id} className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                        <User className="w-3.5 h-3.5 text-primary" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium text-foreground text-sm truncate">{name}</div>
+                        {email && <div className="text-muted-foreground text-xs truncate">{email}</div>}
+                        {course && <div className="text-muted-foreground text-xs truncate">{course}</div>}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

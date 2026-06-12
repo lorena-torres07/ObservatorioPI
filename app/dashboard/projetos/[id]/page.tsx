@@ -34,7 +34,7 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
 
   const { data: members } = await supabase
     .from('project_members')
-    .select('id, user_id, role')
+    .select('id, user_id, role, profiles(full_name, email, course)')
     .eq('project_id', project.id);
 
   const { data: evaluations } = await supabase
@@ -80,7 +80,7 @@ export default async function ProjectDetailPage({ params }: { params: { id: stri
         isOwner={isOwner}
         role={profile.role}
         classes={classes ?? []}
-        members={members ?? []}
+        members={(members ?? []) as unknown as { id: string; user_id: string; role: string; profiles: { full_name: string | null; email: string | null; course: string | null } | null; }[]}
         evaluations={(evaluations ?? []) as unknown as import('@/components/projects/project-detail').EvaluationData[]}
         ownerProfile={ownerProfile as { full_name: string; email: string; course: string } | null}
         isAdmin={isAdmin}
